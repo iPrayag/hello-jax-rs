@@ -1,16 +1,20 @@
-This is a very simple web 'server' for rapid prototyping.
+# JAX-RS Demo
 
-# Features
+A simple server for rapid prototyping RESTful web services.
 
-. Eclipse integration.
-. Embedded jetty integration.
-. Serves static contents from `src/main/webapp`
-. JAX-RS support
+## Features
 
-# Run
+* Eclipse integration
+* Embedded jetty server
+* Serves static contents from `src/main/webapp`
+* Serves web services from `src/main/java/jcheng/jersey`
+
+In short, you can run a RESTful webservice in Java with just a few lines of code.
+
+## Run The Demo
 
 ``` 
-./sbt
+$ ./sbt
 [info] Loading global plugins from /Users/jcheng/.sbt/plugins
 [info] Loading project definition from /Users/jcheng/work/demo/scala-web/project
 [info] Set current project to scala-web (in build file:/Users/jcheng/work/demo/scala-web/)
@@ -27,23 +31,24 @@ This is a very simple web 'server' for rapid prototyping.
 [success] Total time: 0 s, completed Dec 21, 2011 10:58:53 AM
 ```
 
-Then look at your RESTful webservice output by going to [http://localhost:8080/rest/helloFromJava] in your browser.
+Then check out the sample web service:
 
-You can also specify you want JSON output using `curl`:
+* <http://localhost:8080/rest/helloFromJava>
+* <http://localhost:8080/rest/helloFromJava/json>
+* <http://localhost:8080/rest/helloFromJava/xml>
+
+You can also specify that you want JSON output by specifying the 'Accept: **mimetype**' header, e.g.,
 
 ```
-curl -H 'Accept: application/json' http://localhost:8080/rest/helloFromJava
+$ curl -H 'Accept: application/json' http://localhost:8080/rest/helloFromJava
 {"alias":"Java","messages":["hello","world","from","Java"],"email":"java@example.com"}l
 ```
 
-If you are using an Ajax library such as jQuery, remember to explicitly specify the 'Accept' header like we did with
-curl.
 
+## Tested Configuration (aka Requirements)
 
-# Tested Configuration (aka Requirements)
-
-. SBT (version 0.11.1 is included and tested)
-. Eclipse 
+* SBT (version 0.11.1 is included and tested)
+* Eclipse 
     - If you are using Eclipse with Scala, you should have Eclipse 3.6 and Scala IDE 2.0 for Scala 2.9.1
 
 
