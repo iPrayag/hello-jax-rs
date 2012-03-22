@@ -79,7 +79,7 @@
 
                 <xsl:template match="/">
                     <ivy-module version="2.0">
-                        <info organisation="com.icrossing" module="mazda" />
+                        <info organisation="org.jcheng.demo" module="jersey" />
                         <dependencies defaultconfmapping="*->sources">
                             <xsl:apply-templates select="modules/module"/>
                         </dependencies>

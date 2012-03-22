@@ -1,4 +1,3 @@
-lib_managed
 target
 .classpath
 .project
@@ -7,3 +6,4 @@ target
 .DS_Store
 .settings
 lib
+ivy
