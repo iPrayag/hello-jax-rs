@@ -1,0 +1,27 @@
+<ivy-module version="2.0">
+  <info organisation="org.jcheng" module="jersey"/>
+  <configurations>
+    <conf name="compile" visibility="public" description="Compile dependencies"/>
+    <conf name="test" visibility="public" description="Test dependencies"/>
+    <conf name="embeddedJetty" visibility="public" description="Embedded Jetty Server"/>
+  </configurations>
+  <dependencies defaultconfmapping="compile->default,sources">
+    <!-- Base dependencies -->
+    <dependency org="org.eclipse.jetty" name="jetty-webapp" rev="8.1.0.RC4" conf="embeddedJetty->default"/>
+    <dependency org="org.eclipse.jetty" name="jetty-annotations" rev="8.1.0.RC4" conf="embeddedJetty->default"/>
+    <dependency org="org.eclipse.jetty" name="jetty-plus" rev="8.1.0.RC4" conf="embeddedJetty->default"/>
+    <dependency org="junit" name="junit" rev="4.10" conf="test->default"/>
+
+    <dependency org="com.sun.jersey" name="jersey-core" rev="1.11"/>
+    <dependency org="com.sun.jersey" name="jersey-server" rev="1.11"/>
+    <dependency org="com.sun.jersey" name="jersey-json" rev="1.11"/>
+    <dependency org="com.sun.jersey" name="jersey-servlet" rev="1.11"/>
+    <dependency org="com.sun.jersey.contribs" name="jersey-spring" rev="1.11"/>
+
+    <dependency org="org.springframework" name="spring-core" rev="3.1.0.RELEASE"/>
+    <dependency org="org.springframework" name="spring-context" rev="3.1.0.RELEASE"/>
+    <dependency org="org.springframework" name="spring-web" rev="3.1.0.RELEASE"/>
+	<dependency org="cglib" name="cglib" rev="2.2.2"/>
+
+  </dependencies>
+</ivy-module>

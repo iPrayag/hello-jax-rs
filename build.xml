@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns:ivy="antlib:org.apache.ivy.ant" basedir="." default="help" name="jersey-demo">
+
+    <property file="build.properties" />
+    
+    <!-- ================================================================= --> 
+    <!-- Compile & build parameters                                        -->
+    <!-- ================================================================= --> 
+    <property name="src.main.java" value="src/main/java"/>
+    <property name="src.test.java" value="src/test/java"/>
+    <property name="src.main.webapp" value="src/main/webapp"/>
+    <property name="lib.dir" value="lib"/>
+    <property name="javac.debug" value="yes"/>
+    <property name="javac.debug.level" value="lines,vars,source"/>
+    <property name="webapp.dir" value="target/webapp"/>
+    <property name="webapp.port" value="8080"/>
+    <property name="javac.test.dir" value="target/classes/test"/>
+
+    <path id="class.path.main">
+      <fileset dir="${lib.dir}/compile" includes="**/*.jar"/>
+      <fileset dir="${lib.dir}/embeddedJetty" includes="**/servlet-api-3*.jar"/>
+    </path>
+    <path id="class.path.test">
+      <path refid="class.path.main"/>
+      <fileset dir="${lib.dir}/test" includes="**/*.jar"/>
+    </path>
+
+    <!-- ================================================================= --> 
+    <!-- Core ivy targets                                                  -->
+    <!-- ================================================================= --> 
+    <property name="ivy.install.version" value="2.2.0" /> 
+    <property name="ivy.jar.dir" value="${basedir}/ivy" /> 
+    <property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar" /> 
+    <property name="src.generated.ivy" value="target/src/generated/ivy" /> 
+    
+    <target name="ivy-check-download">
+        <available file="${ivy.jar.file}" property="ivy.skip.download"/>
+    </target>
+    <target name="ivy-download" depends="ivy-check-download" unless="ivy.skip.download"> 
+      <mkdir dir="${ivy.jar.dir}"/> 
+      <echo message="installing ivy..."/> 
+      <get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar"
+           dest="${ivy.jar.file}" usetimestamp="true"/> 
+    </target> 
+    <target name="ivy-init" depends="ivy-download" description="Initialize Ivy for this ant build"> 
+      <path id="ivy.lib.path"> 
+        <fileset dir="${ivy.jar.dir}" includes="*.jar"/> 
+      </path>
+      <taskdef resource="org/apache/ivy/ant/antlib.xml"
+               uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/> 
+    </target>
+
+    <target name="ivy-clean-cache" depends="ivy-init">
+      <ivy:cleancache /> 
+    </target> 
+
+    <target name="ivy-clean-lib" depends="ivy-init">
+      <delete dir="lib"/>
+      <delete dir="ivy"/>
+    </target> 
+
+    <target name="clean-resolve" depends="ivy-init">
+      <delete dir="lib"/>
+      <antcall target="resolve"/>
+    </target> 
+
+    <target name="resolve" depends="ivy-init">
+        <ivy:settings file="ivy-settings.xml"/>
+        <ivy:resolve file="ivy.xml" />
+        
+        <ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision].[ext]" type="jar,bundle"/>
+        <ivy:report todir="lib/reports" />            
+
+        <mkdir dir="${src.generated.ivy}"/>
+        <echo file="${src.generated.ivy}/ivy-report-into-ivy-file.xslt">
+          <![CDATA[
+            <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+                <xsl:template match="/">
+                    <ivy-module version="2.0">
+                        <info organisation="com.icrossing" module="mazda" />
+                        <dependencies defaultconfmapping="*->sources">
+                            <xsl:apply-templates select="modules/module"/>
+                        </dependencies>
+                    </ivy-module>
+                </xsl:template>
+
+                <xsl:template match="module">
+                    <dependency org="{@organisation}" name="{@name}" rev="{@rev}" />
+                </xsl:template>
+
+            </xsl:stylesheet>
+          ]]>
+        </echo>
+
+        <ivy:artifactreport tofile="${src.generated.ivy}/ivy-report.xml" />
+        <xslt in="${src.generated.ivy}/ivy-report.xml" out="${src.generated.ivy}/ivy-file-for-sources.xml" style="${src.generated.ivy}/ivy-report-into-ivy-file.xslt" />
+        <ivy:resolve file="${src.generated.ivy}/ivy-file-for-sources.xml" />
+        <ivy:retrieve pattern="${lib.dir}/source/[artifact]-[type].[ext]" type="source"/>
+    </target> 
+    
+    <!-- ================================================================= --> 
+    <!-- Core ant Macros                                                   -->
+    <!-- ================================================================= --> 
+    <macrodef name="webapp-javac">
+      <attribute name="srcdir" default="${src.main.java}"/>
+      <attribute name="webappDir" default="${webapp.dir}"/>
+      <attribute name="debug" default="${javac.debug}"/>
+      <attribute name="debugLevel" default="${javac.debug.level}"/>
+      <element name="javac-elements" implicit="yes"/>
+
+      <sequential>
+        <mkdir dir="@{webappDir}/WEB-INF/classes"/>
+        <javac srcdir="@{srcdir}"
+                destdir="@{webappDir}/WEB-INF/classes"
+                debug="@{debug}"
+                debuglevel="@{debugLevel}"
+                includeantruntime="false">
+            <javac-elements />
+        </javac>
+      </sequential>
+    </macrodef>
+
+    <!-- ================================================================= --> 
+    <!-- Core ant targets                                                  -->
+    <!-- ================================================================= --> 
+    <target name="setup">
+      <mkdir dir="${src.main.java}"/>
+      <mkdir dir="${src.test.java}"/>
+      <mkdir dir="${src.main.webapp}"/>
+      <mkdir dir="${lib.dir}/compile"/>
+      <mkdir dir="${lib.dir}/test"/>
+      <mkdir dir="${lib.dir}/embeddedJetty"/>
+      <mkdir dir="${webapp.dir}"/>
+      <mkdir dir="${javac.test.dir}"/>
+
+    </target>
+    <target name="help">
+        <java classname="org.apache.tools.ant.Main">
+            <arg value="-buildfile"/>
+            <arg value="${ant.file}"/>
+            <arg value="-projecthelp"/>
+        </java>
+    </target>
+
+    <target name="clean" 
+     description="Deletes compiled and build files">
+        <delete dir="target" />
+    </target>
+
+    <target name="test" depends="setup">
+        <javac srcdir="${src.test.java}"
+               destdir="${javac.test.dir}"
+               debug="${javac.debug}"
+               debuglevel="${javac.debug.level}"
+               includeantruntime="false">
+          <classpath refid="class.path.test" />
+        </javac>
+    </target>
+
+    <target name="webapp-compile"
+     description="Compiles sources into class files">
+        <webapp-javac>
+          <classpath refid="class.path.main" />
+        </webapp-javac>
+    </target>
+
+    <target name="webapp-jsps"
+     description="Installs contents that can be reloaded at run time, like jsps">
+        <copy todir="${webapp.dir}">
+            <fileset dir="${src.main.webapp}">
+                <include name="**/*"/>
+                <exclude name="WEB-INF/web.xml"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="webapp-restart"
+     description="Installs contents that reauire a restart">
+        <copy todir="${webapp.dir}">
+          <fileset dir="${src.main.webapp}">
+            <include name="**/*"/>
+          </fileset>
+        </copy>
+
+        <copy todir="${webapp.dir}/WEB-INF/lib">
+          <path refid="class.path.main"/>
+        </copy>
+    </target>
+
+    <target name="webapp-all" depends="webapp-compile, webapp-jsps, webapp-restart, webapp-run" description="Compiles the webapp and start embedded Jetty server"/>
+
+    <target name="webapp-run">
+      <mkdir dir="target/src/generated/java/gen"/>
+      <echo file="target/src/generated/java/gen/EmbeddedJetty.java">
+        <![CDATA[
+package gen;
+
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.webapp.*;
+
+
+public class EmbeddedJetty {
+    public static void main(String[] args) throws Exception {
+        Server server = new Server(${webapp.port});
+        WebAppContext webapp = new WebAppContext();
+        webapp.setContextPath("/");
+        webapp.setWar("${webapp.dir}");
+        server.setHandler(webapp);
+ 
+        server.start();
+        server.join();
+    }
+}
+      ]]>
+      </echo>
+
+      <mkdir dir="target/classes/embeddedJetty"/>
+      <path id="class.path.jetty">
+        <pathelement path="target/classes/embeddedJetty"/>
+        <fileset dir="${lib.dir}/embeddedJetty" includes="**/*.jar"/>
+      </path>
+      <javac srcdir="target/src/generated/java"
+             destdir="target/classes/embeddedJetty"
+             debug="${javac.debug}"
+             debuglevel="${javac.debug.level}"
+             includeantruntime="false">
+        <classpath refid="class.path.jetty"/>
+      </javac>
+
+      <java classname="gen.EmbeddedJetty" fork="true">
+        <classpath refid="class.path.jetty"/>
+      </java>
+    </target>
+
+</project>
