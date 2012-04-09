@@ -26,7 +26,11 @@ public class StupidJsonWriter implements
 
 	@Override
 	public boolean isWriteable(Class<?> clazz, Type type, Annotation[] annotations,
-			MediaType mediaType) { return true;	}
+			MediaType mediaType) {
+		System.out.println("clazz: " + clazz + ", type: " + type);
+		
+		return true;	
+	}
 
 	@Override
 	public void writeTo(Biography bio, Class<?> clazz, Type type,

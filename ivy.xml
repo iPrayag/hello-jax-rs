@@ -1,5 +1,5 @@
 <ivy-module version="2.0">
-  <info organisation="org.jcheng" module="jersey"/>
+  <info organisation="com.icrossing" module="mazda"/>
   <configurations>
     <conf name="compile" visibility="public" description="Compile dependencies"/>
     <conf name="test" visibility="public" description="Test dependencies"/>
@@ -7,23 +7,36 @@
   </configurations>
   <dependencies defaultconfmapping="compile->default,sources">
     <!-- Base dependencies -->
-    <dependency org="org.eclipse.jetty" name="jetty-webapp" rev="8.1.0.RC4" conf="embeddedJetty->default"/>
-    <dependency org="org.eclipse.jetty" name="jetty-annotations" rev="8.1.0.RC4" conf="embeddedJetty->default"/>
-    <dependency org="org.eclipse.jetty" name="jetty-plus" rev="8.1.0.RC4" conf="embeddedJetty->default"/>
+    <dependency org="org.eclipse.jetty" name="jetty-webapp" rev="8.0.1.v20110908" conf="embeddedJetty->default"/>
     <dependency org="junit" name="junit" rev="4.10" conf="test->default"/>
-
-    <dependency org="com.sun.jersey" name="jersey-core" rev="1.11"/>
-    <dependency org="com.sun.jersey" name="jersey-server" rev="1.11"/>
-    <dependency org="com.sun.jersey" name="jersey-json" rev="1.11">
-        <exclude name="stax-api" org="stax"/>
+            
+    <dependency org="org.jboss.resteasy" name="resteasy-jaxrs" rev="2.3.0.GA">
+      <exclude org="org.apache.httpcomponents" module="httpclient"/>
+      <exclude org="commons-httpclient" module="commons-httpclient"/>
     </dependency>
-    <dependency org="com.sun.jersey" name="jersey-servlet" rev="1.11"/>
-    <dependency org="com.sun.jersey.contribs" name="jersey-spring" rev="1.11"/>
+    <dependency org="org.jboss.resteasy" name="resteasy-jaxb-provider" rev="2.3.0.GA"/>
+    <dependency org="org.jboss.resteasy" name="resteasy-jettison-provider" rev="2.3.0.GA"/>
+    <dependency org="org.jboss.resteasy" name="resteasy-spring" rev="2.3.0.GA">
+      <exclude org="org.apache.httpcomponents" module="httpclient"/>
+      <exclude org="commons-httpclient" module="commons-httpclient"/>
+    </dependency>
 
-    <dependency org="org.springframework" name="spring-core" rev="3.1.0.RELEASE"/>
+    <!--
+    We need to either choose RESTeasy 1.2.0GA + Spring 2.5.6.SEC03 or RESTeasy 2.3.0GA + Spring 3.1.0.RELEASE
+    -->
+    <dependency org="org.springframework" name="spring-beans" rev="3.1.0.RELEASE"/>
     <dependency org="org.springframework" name="spring-context" rev="3.1.0.RELEASE"/>
     <dependency org="org.springframework" name="spring-web" rev="3.1.0.RELEASE"/>
-	<dependency org="cglib" name="cglib" rev="2.2.2"/>
+    <dependency org="org.springframework" name="spring-tx" rev="3.1.0.RELEASE"/>
+    <dependency org="org.springframework" name="spring-jdbc" rev="3.1.0.RELEASE"/>
+    <dependency org="org.springframework" name="spring-orm" rev="3.1.0.RELEASE"/>
+    <dependency org="org.springframework" name="spring-test" rev="3.1.0.RELEASE"/>
+    <dependency org="org.springframework" name="spring-webmvc" rev="3.1.0.RELEASE"/>
+    <dependency org="org.springframework" name="spring-struts" rev="3.1.0.RELEASE">
+      <exclude org="struts" module="struts"/>
+    </dependency>
+
+    <dependency org="cglib" name="cglib-nodep" rev="2.2.2"/>
 
   </dependencies>
 </ivy-module>

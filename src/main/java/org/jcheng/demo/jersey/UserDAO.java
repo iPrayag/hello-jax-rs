@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jcheng.demo.model.User;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserDAO {
 	
 	private final List<User> users = new ArrayList<User>();
