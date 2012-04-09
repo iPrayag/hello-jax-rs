@@ -1,7 +1,5 @@
 package org.jcheng.demo.jersey;
 
-import java.util.Arrays;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -15,15 +13,12 @@ import org.springframework.stereotype.Component;
 @Path("/helloFromJava")
 public class HelloJavaResource {
 
-	private static final String[] MESSAGES = { "hello", "world", "from", "Java" };
-
 	// Return JSON or XML based on the 'Accept' header, e.g., 'Accept:
 	// application/json'.
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public User getUser() {
 		User user = new User();
-		user.getMessages().addAll(Arrays.asList(MESSAGES));
 		user.setAlias("Java");
 		user.setEmail("java@example.com");
 		return user;
