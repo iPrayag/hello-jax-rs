@@ -1,17 +1,10 @@
 # JAX-RS Demo
 
-A simple server for rapid prototyping RESTful web services.
-
-## Features
-
-* Eclipse integration
-* Embedded jetty server
-* Serves static contents from `src/main/webapp`
-* Serves web services from `src/main/java/org/jcheng/demo/jersey`
-
-This proof-of-concept shows can deploy RESTful webservices in Java with just a few lines of code.
+A simple server for rapid prototyping RESTful web services. This proof-of-concept shows that you can deploy RESTful web services in Java with just a few lines of code.
 
 ## Run The Demo
+
+Clone the project from Github.
 
 ``` 
 $ ant clean-resolve webapp-all
