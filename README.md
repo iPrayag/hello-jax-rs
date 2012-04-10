@@ -109,7 +109,7 @@ $ curl -H 'Accept: application/xml' http://localhost:8080/rest/helloFromJava
 
 ## Why Ivy instead of Maven?
 
-Maven is the standard when it comes to dependency management. However, Ivy is useful when the library you need is not hosted on a public Maven repository or when you have complicated dependencies (LWJGL. for example). Ivy allows a build process where you do check in your dependencies, for better or worse. It's a trade off between "enterprisiness" and flexibility. 
+Maven is the standard when it comes to dependency management. However, Ivy is useful when the library you need is not hosted on a public Maven repository or when you have complicated dependencies (LWJGL. for example). Ivy allows a build process where you do check in your dependencies (for better or worse). For this proof-of-concept, I need the option to override dependencies with jar files on the local environment, which Maven does not support easily.
 
 I have included some useful ant tasks to help with managing Ivy dependencies. The `clean-resolve` task will generate ivy dependency reports in the `lib/reports` directory.
 
