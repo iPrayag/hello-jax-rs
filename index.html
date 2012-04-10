@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640" />
+
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+
+    <script type="text/javascript" src="javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#main_content').headsmart()
+      })
+    </script>
+    <title>Hello-jax-rs by jlcheng</title>
+  </head>
+
+  <body>
+    <a id="forkme_banner" href="https://github.com/jlcheng/hello-jax-rs">Fork Me on GitHub</a>
+    <div class="shell">
+
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1>Hello-jax-rs</h1>
+            <h2></h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
+
+      <section id="downloads">
+        <span class="inner">
+          <a href="https://github.com/jlcheng/hello-jax-rs/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/jlcheng/hello-jax-rs/tarball/master" class="tgz"><em>download</em> .TGZ</a>
+        </span>
+      </section>
+
+      <span class="banner-fix"></span>
+
+      <section id="main_content">
+        <h1>JAX-RS Demo</h1>
+
+<p>A simple server for rapid prototyping RESTful web services. This proof-of-concept shows that you can deploy RESTful web services in Java with just a few lines of code.</p>
+
+<h2>Run The Demo</h2>
+
+<p>Download or checkout the project from github:</p>
+
+<pre><code>git clone git://github.com/jlcheng/hello-jax-rs.git
+</code></pre>
+
+<p>Invoke the following ant targets:
+<code>
+$ ant clean-resolve webapp-all
+</code></p>
+
+<p>Then check out the sample web service:</p>
+
+<ul>
+<li><a href="http://localhost:8080/rest/helloFromJava">http://localhost:8080/rest/helloFromJava</a></li>
+<li><a href="http://localhost:8080/rest/helloFromJava/json">http://localhost:8080/rest/helloFromJava/json</a></li>
+<li><a href="http://localhost:8080/rest/helloFromJava/xml">http://localhost:8080/rest/helloFromJava/xml</a></li>
+</ul><p>You can also specify that you want XML output by specifying the 'Accept: <strong>mimetype</strong>' header, e.g.,</p>
+
+<pre><code>$ curl -H 'Accept: application/xml' http://localhost:8080/rest/helloFromJava
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;&lt;user&gt;&lt;alias&gt;Java&lt;/alias&gt;&lt;email&gt;java@example.com&lt;/email&gt;&lt;messages&gt;hello&lt;/messages&gt;&lt;messages&gt;world&lt;/messages&gt;&lt;messages&gt;from&lt;/messages&gt;&lt;messages&gt;Java&lt;/messages&gt;&lt;/user&gt;
+</code></pre>
+      </section>
+
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <p>this project by <a href="https://github.com/jlcheng">jlcheng</a> can be found on <a href="https://github.com/jlcheng/hello-jax-rs">GitHub</a></p>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
