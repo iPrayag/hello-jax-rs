@@ -7,16 +7,16 @@
   </configurations>
   <dependencies defaultconfmapping="compile->default,sources">
     <!-- Base dependencies -->
-    <dependency org="org.eclipse.jetty" name="jetty-webapp" rev="8.0.1.v20110908" conf="embeddedJetty->default"/>
+    <dependency org="org.mortbay.jetty" name="jetty" rev="6.1.5" conf="embeddedJetty->default"/>
     <dependency org="junit" name="junit" rev="4.10" conf="test->default"/>
             
-    <dependency org="org.jboss.resteasy" name="resteasy-jaxrs" rev="2.3.0.GA">
+    <dependency org="org.jboss.resteasy" name="resteasy-jaxrs" rev="2.0.1.GA">
       <exclude org="org.apache.httpcomponents" module="httpclient"/>
       <exclude org="commons-httpclient" module="commons-httpclient"/>
     </dependency>
-    <dependency org="org.jboss.resteasy" name="resteasy-jaxb-provider" rev="2.3.0.GA"/>
-    <dependency org="org.jboss.resteasy" name="resteasy-jettison-provider" rev="2.3.0.GA"/>
-    <dependency org="org.jboss.resteasy" name="resteasy-spring" rev="2.3.0.GA">
+    <dependency org="org.jboss.resteasy" name="resteasy-jaxb-provider" rev="2.0.1.GA"/>
+    <dependency org="org.jboss.resteasy" name="resteasy-jettison-provider" rev="2.0.1.GA"/>
+    <dependency org="org.jboss.resteasy" name="resteasy-spring" rev="2.0.1.GA">
       <exclude org="org.apache.httpcomponents" module="httpclient"/>
       <exclude org="commons-httpclient" module="commons-httpclient"/>
     </dependency>

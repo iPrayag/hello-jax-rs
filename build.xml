@@ -197,9 +197,10 @@
         <![CDATA[
 package gen;
 
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.webapp.*;
-
+import org.mortbay.jetty.*;
+import org.mortbay.jetty.security.*;
+import org.mortbay.jetty.servlet.*;
+import org.mortbay.jetty.webapp.*;
 
 public class EmbeddedJetty {
     public static void main(String[] args) throws Exception {
