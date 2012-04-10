@@ -26,7 +26,7 @@ public class StupidJsonWriter implements
 
 	@Override
 	public boolean isWriteable(Class<?> clazz, Type type, Annotation[] annotations,
-			MediaType mediaType) { return true;	}
+			MediaType mediaType) { return clazz != null && clazz.equals(Biography.class);	}
 
 	@Override
 	public void writeTo(Biography bio, Class<?> clazz, Type type,
@@ -38,6 +38,5 @@ public class StupidJsonWriter implements
 			      + "\"body\": \"" + bio.getBody() + "\"}";
 		out.write(json.getBytes());
 	}
-
 
 }

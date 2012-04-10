@@ -19,26 +19,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
-@Path("/users")
+@Path("/users/1.0")
 @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 @Component
-public class MoreExamples {
+public class UserService {
 	
 	@Autowired private UserDAO userDAO;
 
 	@GET @Path("/list")
-	public List<User> example1() {
+	public List<User> getUsers() {
 		return userDAO.getUsers();
 	}
 	
 	@GET @Path("/get")
-	public User getUserById(@QueryParam("id") int id) {
-		if ( id >=0 && id < userDAO.getUsers().size() ) {
-			return userDAO.getUsers().get(id);
+	public User getUserById(@QueryParam("id") long id) {
+		try {
+			return userDAO.getUser(id);
+		} catch ( RuntimeException e ) {
+			throw new WebApplicationException(
+					Response.status(Status.NOT_FOUND)
+							.entity(new BasicStatus("User not found")).build());
 		}
-		throw new WebApplicationException(
-				Response.status(Status.NOT_FOUND)
-						.entity(new BasicStatus("User not found")).build());
 	}
 	
 	@GET @Path("/updateEmail")
@@ -60,7 +61,7 @@ public class MoreExamples {
 	}
 	
 	@GET @Path("/getBio")
-	public Biography getBlogPost(@QueryParam("id") int id) {
+	public Biography getBiography(@QueryParam("id") int id) {
 		Biography blogPost = new Biography();
 		blogPost.setAuthor(getUserById(0));
 		blogPost.setTitle("Hello World");

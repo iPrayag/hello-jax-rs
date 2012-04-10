@@ -48,8 +48,4 @@ public class HelloJavaResource {
 		return getUser();
 	}
 
-
-	public static final void main(String[] argv) {
-
-	}
 }

@@ -1,6 +1,9 @@
 
 package org.jcheng.demo.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Biography {
 	
 	private String title;
