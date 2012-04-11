@@ -6,10 +6,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.jcheng.demo.model.User;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 
-@Component
+@Service("helloService")
 @Path("/helloFromJava")
 public class HelloJavaResource {
 

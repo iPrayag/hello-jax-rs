@@ -20,15 +20,12 @@ import org.springframework.stereotype.Component;
 public class StupidJsonWriter implements
 	MessageBodyWriter<Biography> {
 	
-	@Override
 	public long getSize(Biography bio, Class<?> clazz, Type type,
 			Annotation[] annotations, MediaType mediaType) { return -1;	}
-
-	@Override
+	
 	public boolean isWriteable(Class<?> clazz, Type type, Annotation[] annotations,
 			MediaType mediaType) { return clazz != null && clazz.equals(Biography.class);	}
 
-	@Override
 	public void writeTo(Biography bio, Class<?> clazz, Type type,
 			Annotation[] annotations, MediaType mediaType,
 			MultivaluedMap<String, Object> map, OutputStream out)

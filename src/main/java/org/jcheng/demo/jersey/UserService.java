@@ -16,12 +16,12 @@ import org.jcheng.demo.model.BasicStatus;
 import org.jcheng.demo.model.Biography;
 import org.jcheng.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 
 @Path("/users/1.0")
 @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-@Component
+@Service
 public class UserService {
 	
 	@Autowired private UserDAO userDAO;
